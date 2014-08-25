@@ -3,19 +3,35 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
+	<title>Words!</title>
 	<!-- Bootstrap CDN, if preferred -->
 	<!-- <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> -->
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<!-- jQuery CDN, if preferred -->
-	<!-- <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script> -->
-	<script src="js/jquery.min.js"></script>
-	<script src="js/app.js"></script>
+
 </head>
 <body>
 	
+	<div class="container">
+		<h1>Word Up</h1>
+		<form method="get" action="#">
+			<input type="text" name="search" id="search">
+			<input type="submit" value="Word Me Up!" id="submit">
+		</form>
+
+		<div class="results">
+			<div><span class:="word"></span></div>
+			<div>Definition:<span class:="definition"></span></div>
+			<div>Synonyms:<span class:="syn"></span></div>
+			<div>Antonyms:<span class:="ant"></span></div>			
+		</div>
+<!-- 		<div class="template">
+			<div><span class:="word"></span></div>
+			<div>Definition:<span class:="definition"></span></div>
+			<div>Synonyms:<span class:="syn"></span></div>
+			<div>Antonyms:<span class:="ant"></span></div>
+		</div> -->
+	</div>
 </body>
 
 
 
-</html>
