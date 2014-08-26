@@ -1,8 +1,12 @@
 $(document).ready(function(){
 
-	$("form").submit(function(evt) {
-		evt.preventDefault();
+	function playSound() {
+		$('#sound')[0].volume = 0.9;
+		$('#sound')[0].load();
+		$('#sound')[0].play();
+	}
 
+	function reset() {
 		$('h2').empty();
 		$('.pronounce').empty();
 		$('#sound').attr('src', '');
@@ -10,7 +14,9 @@ $(document).ready(function(){
 		$('.left').empty().append('<h3>Definitions</h3>');
 		$('.center').empty().append('<h3>Related Words</h3>');
 		$('.right').empty().append('<h3>Examples</h3>');
+	}
 
+	function getDefinition() {
 		var input = $('#search').val();
 
 		$.ajax(
@@ -37,6 +43,10 @@ $(document).ready(function(){
 				} //end callback
 			} // end settings
 		); //end ajax
+	}
+
+	function getPronounce() {
+		var input = $('#search').val();
 
 		$.ajax(
 			'http://api.wordnik.com/v4/word.json/'+ input +'/pronunciations',
@@ -50,6 +60,10 @@ $(document).ready(function(){
 				} //end callback
 			} //end settings
 		); //end ajax
+	}
+
+	function getRelated() {
+		var input = $('#search').val();
 
 		$.ajax(
 			'http://api.wordnik.com/v4/word.json/'+ input +'/relatedWords',
@@ -71,6 +85,10 @@ $(document).ready(function(){
 				} //end callback
 			} //end settings
 		); //end ajax
+	}
+
+	function getExamples() {
+		var input = $('#search').val();
 
 		$.ajax(
 			'http://api.wordnik.com/v4/word.json/'+ input +'/examples',
@@ -87,6 +105,10 @@ $(document).ready(function(){
 				} //end callback
 			} //end settings
 		); //end ajax
+	}
+
+	function getAudio() {
+		var input = $('#search').val();
 
 		$.ajax(
 			'http://api.wordnik.com/v4/word.json/'+ input +'/audio',
@@ -104,25 +126,28 @@ $(document).ready(function(){
 						$('#sound').attr('src', data[0].fileUrl);
 						$('.playSound').attr('style', 'display: inline-block');
 					} 
+					playSound();
 					
 				} //end callback
 			} //end settings
 		); //end ajax
+	}
+
+	$("form").submit(function(evt) {
+		evt.preventDefault();
+
+		reset();
+		getRelated();
+		getDefinition();
+		getPronounce();
+		getExamples();
+		getAudio();
 
 		$('#search').val('');
-		// getDefinition(input);
-		// getRelated(input);
+	}); // end submit handler
 
-	});
 
-	$('.container').on("click", ".playSound", function() {
-		$('#sound')[0].volume = 0.9;
-		$('#sound')[0].load();
-		$('#sound')[0].play();
-
-		console.log('.playsound was clicked');
-
-	}); //end of sound click handler
+	$('.container').on("click", ".playSound", playSound); //end of sound click handler
 
 	// =========================================
 	// Use enter key
