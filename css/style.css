@@ -72,7 +72,7 @@ input:nth-child(2) {
 .col {
 	display: inline-block;
 	vertical-align: top;
-	margin: 2em;
+	margin: 2%;
 	width: 28%;
 }
 
