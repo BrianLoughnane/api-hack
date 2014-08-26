@@ -102,7 +102,7 @@ $(document).ready(function(){
 					var firstData = data[0];
 					if(firstData !== undefined) {
 						$('#sound').attr('src', data[0].fileUrl);
-						$('.playSound').css('display','inline-block');
+						$('.playSound').attr('style', 'display: inline-block');
 					} 
 					
 				} //end callback
