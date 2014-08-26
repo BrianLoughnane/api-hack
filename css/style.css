@@ -1,31 +1,59 @@
 
 * {
-	outline: 1px dotted red;
+	/*outline: 1px dotted red;*/
 	overflow: hidden;
+}
+
+body {
+	font-family: Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+	background: url('../book.jpg');
+	background-repeat: repeat-y;
+	background-size: 100%;
 }
 
 h1 {
 	text-align: center;
 }
 
+h2 {
+	font-size: 3.5em;
+}
+
+h3 {
+	border-bottom: 0.1em dotted green;
+}
+
+h4 {
+	border-bottom: 0.1em dotted blue;
+}
+
+h1, h2, h3, h4 {
+	font-weight: bold;
+}
+
 form {
 	text-align: center;
+	position: relative;
 }
 
 input {
-	display: block;
-	margin: 2em auto;
+	display: inline-block;
+	margin: 1em auto;
 	text-align: center;
 }
 
 input:first-child {
 	width: 40%;
 	font: 800 2em/2em cursive, Helvetica, serif;
+	margin: 0.5em 0em;
 }
 
 input:nth-child(2) {
 	width: 10%;
 	height: 3em;
+	position: absolute;
+	top: 9%;
+	margin: 1em 0.6em;
 }
 
 .container {
@@ -35,6 +63,10 @@ input:nth-child(2) {
 .container>div {
 	text-align: center;
 	clear: both;
+}
+
+.columns {
+	background: rgba(253, 242, 226, 0.8);	
 }
 
 .col {
@@ -59,6 +91,39 @@ input:nth-child(2) {
 	font: 1.5em futura;
 }
 
-.left span {
+.left span, .ex {
+	display: block;
+	padding: 0.7em;
+	/*margin: .2em;*/
+	text-align: left;
+}
+
+.pronounce {
+	margin-bottom: 0.2em;
+	font-size: 2em;
 	display: block;
 }
+
+
+
+/*.examples {
+	position: relative;
+}
+
+.examples:after {
+	content: 'New Example';
+	padding: 0.4em;
+	text-align: center;
+	position: absolute;
+	left: 4em;
+	background: red;
+	border-radius: 0.9em;
+	font-size: 0.9em;
+	bottom: 0.5em;
+}
+
+.examples span {
+	float: right;
+	margin-right: 8em;
+	margin-top: .5em;
+}*/
