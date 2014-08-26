@@ -52,3 +52,13 @@ input:nth-child(2) {
 	display: inline-block;
 	padding: 0em 1em;
 }
+
+.examples {
+	display: block;
+	text-align: center;
+	font: 1.5em futura;
+}
+
+.left span {
+	display: block;
+}

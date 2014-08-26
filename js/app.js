@@ -4,6 +4,12 @@ $(document).ready(function(){
 		evt.preventDefault();
 		console.log('form submitted');
 
+		$('h2').empty();
+		$('.examples').empty();
+		$('.center').empty().append('<h3>Related Words</h3>');
+		$('.left').empty().append('<h3>Definitions</h3>');
+
+
 		var input = $('#search').val();
 
 		$.ajax(
@@ -22,21 +28,9 @@ $(document).ready(function(){
 					$('h2').text(data[0].word);
 
 					$.each(data, function(i, definition){
-						var def = $('.template .result').clone();
-						
-						// if(i>0 && (definition[i].attributionText !== definition[i-1].attributionText)) {
-							def.find('span:first-child').text(definition.attributionText);
-						// } else {
-						// 	def.find('span:first-child').hide();
-						// }
-						
-						
-
-						def.find('span:nth-child(2)').text(definition.text);
-						$('.left').append(def);
+						$('.left').append('<span class="def">'+ definition.text + '</span>');					
 						console.log($(this));
 					}); // end each loop
-
 				} //end callback
 			} // end settings
 		); //end ajax
@@ -46,6 +40,7 @@ $(document).ready(function(){
 			{
 				data : {
 					word: input,
+					limit: 200,
 					api_key: 'dd938175caa9ac3a0a32c09fcc607d8638f0a0e82c8a0bbad'
 				}, //end data
 				success: function(data) {
@@ -59,6 +54,22 @@ $(document).ready(function(){
 						});
 						}
 					);
+
+				}
+			} //end settings
+		); //end ajax
+
+		$.ajax(
+			'http://api.wordnik.com/v4/word.json/'+ input +'/topExample',
+			{
+				data : {
+					word: input,
+					api_key: 'dd938175caa9ac3a0a32c09fcc607d8638f0a0e82c8a0bbad'
+				}, //end data
+				success: function(data) {
+					console.log(data);
+
+					$('.examples').html('<em>'+ data.text + '<br>' + '-' + data.title)+'</em>';
 
 				}
 			} //end settings
