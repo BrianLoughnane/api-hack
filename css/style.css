@@ -122,6 +122,10 @@ input:nth-child(2) {
 	display: hidden;
 }
 
+.playSound:hover {
+	cursor: pointer;
+}
+
 
 /*.examples {
 	position: relative;
