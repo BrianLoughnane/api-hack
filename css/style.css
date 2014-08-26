@@ -1,7 +1,7 @@
 
 * {
 	/*outline: 1px dotted red;*/
-	overflow: hidden;
+	/*overflow: hidden;*/
 }
 
 body {
@@ -9,6 +9,7 @@ body {
 	background: url('../book.jpg');
 	background-repeat: repeat-y;
 	background-size: 100%;
+	overflow: scroll;
 }
 
 h1 {
@@ -66,7 +67,7 @@ input:nth-child(2) {
 }
 
 .columns {
-	background: rgba(253, 242, 226, 0.8);	
+	background: rgba(253, 242, 226, 0.8);
 }
 
 .col {
