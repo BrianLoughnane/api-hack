@@ -5,6 +5,8 @@ $(document).ready(function(){
 
 		$('h2').empty();
 		$('.pronounce').empty();
+		$('#sound').attr('src', '');
+		$('.playSound').attr('style', 'display: hidden');
 		$('.left').empty().append('<h3>Definitions</h3>');
 		$('.center').empty().append('<h3>Related Words</h3>');
 		$('.right').empty().append('<h3>Examples</h3>');
@@ -86,11 +88,41 @@ $(document).ready(function(){
 			} //end settings
 		); //end ajax
 
+		$.ajax(
+			'http://api.wordnik.com/v4/word.json/'+ input +'/audio',
+			{
+				data : {
+					word: input,
+					limit: 3,
+					api_key: 'dd938175caa9ac3a0a32c09fcc607d8638f0a0e82c8a0bbad'
+				}, //end data
+				success: function(data) {
+					console.log('audio');
+					console.log(data[0]);
+					var firstData = data[0];
+					if(firstData !== undefined) {
+						$('#sound').attr('src', data[0].fileUrl);
+						$('.playSound').css('display','inline-block');
+					} 
+					
+				} //end callback
+			} //end settings
+		); //end ajax
+
 		$('#search').val('');
 		// getDefinition(input);
 		// getRelated(input);
 
 	});
+
+	$('.container').on("click", ".playSound", function() {
+		$('#sound')[0].volume = 0.9;
+		$('#sound')[0].load();
+		$('#sound')[0].play();
+
+		console.log('.playsound was clicked');
+
+	}); //end of sound click handler
 
 	// =========================================
 	// Use enter key
