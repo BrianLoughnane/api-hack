@@ -16,8 +16,7 @@ $(document).ready(function(){
 		$('.right').empty().append('<h3>Examples</h3>');
 	}
 
-	function getDefinition() {
-		var input = $('#search').val();
+	function getDefinition(input) {
 
 		$.ajax(
 			'http://api.wordnik.com/v4/word.json/'+ input +'/definitions',
@@ -45,8 +44,7 @@ $(document).ready(function(){
 		); //end ajax
 	}
 
-	function getPronounce() {
-		var input = $('#search').val();
+	function getPronounce(input) {
 
 		$.ajax(
 			'http://api.wordnik.com/v4/word.json/'+ input +'/pronunciations',
@@ -62,8 +60,7 @@ $(document).ready(function(){
 		); //end ajax
 	}
 
-	function getRelated() {
-		var input = $('#search').val();
+	function getRelated(input) {
 
 		$.ajax(
 			'http://api.wordnik.com/v4/word.json/'+ input +'/relatedWords',
@@ -78,7 +75,7 @@ $(document).ready(function(){
 						var type = related.relationshipType;
 						$('.center').append('<h4>'+type + '</h4>');
 						$.each(related.words, function(i, word){
-							$('.center').append(word + '<br>');
+							$('.center').append('<span>' + word + '</span>');
 						});
 						} //end inner each
 					); //end outer each
@@ -87,8 +84,7 @@ $(document).ready(function(){
 		); //end ajax
 	}
 
-	function getExamples() {
-		var input = $('#search').val();
+	function getExamples(input) {
 
 		$.ajax(
 			'http://api.wordnik.com/v4/word.json/'+ input +'/examples',
@@ -107,8 +103,7 @@ $(document).ready(function(){
 		); //end ajax
 	}
 
-	function getAudio() {
-		var input = $('#search').val();
+	function getAudio(input) {
 
 		$.ajax(
 			'http://api.wordnik.com/v4/word.json/'+ input +'/audio',
@@ -135,17 +130,30 @@ $(document).ready(function(){
 
 	$("form").submit(function(evt) {
 		evt.preventDefault();
+		var input = $('#search').val();
 
 		reset();
-		getRelated();
-		getDefinition();
-		getPronounce();
-		getExamples();
-		getAudio();
+		getRelated(input);
+		getDefinition(input);
+		getPronounce(input);
+		getExamples(input);
+		getAudio(input);
 
 		$('#search').val('');
 	}); // end submit handler
 
+	$('.center').on("click", "span", function(){
+		
+		var input = $(this).text();
+
+		reset();
+		getRelated(input);
+		getDefinition(input);
+		getPronounce(input);
+		getExamples(input);
+		getAudio(input);
+
+	}); //end of related word click handler
 
 	$('.container').on("click", ".playSound", playSound); //end of sound click handler
 

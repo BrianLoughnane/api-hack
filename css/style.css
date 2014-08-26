@@ -98,6 +98,15 @@ input:nth-child(2) {
 	text-align: left;
 }
 
+.center span {
+	display: block;
+}
+
+.center span:hover {
+	font-weight: bold;
+	cursor: pointer;
+}
+
 .pronounce {
 	margin-bottom: 0.2em;
 	font-size: 2em;
@@ -111,6 +120,7 @@ input:nth-child(2) {
 	background-size: contain;
 	display: hidden;
 }
+
 
 /*.examples {
 	position: relative;
