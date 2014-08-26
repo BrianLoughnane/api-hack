@@ -114,8 +114,6 @@ $(document).ready(function(){
 					api_key: 'dd938175caa9ac3a0a32c09fcc607d8638f0a0e82c8a0bbad'
 				}, //end data
 				success: function(data) {
-					console.log('audio');
-					console.log(data[0]);
 					var firstData = data[0];
 					if(firstData !== undefined) {
 						$('#sound').attr('src', data[0].fileUrl);

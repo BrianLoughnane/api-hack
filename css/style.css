@@ -1,9 +1,4 @@
 
-* {
-	/*outline: 1px dotted red;*/
-	/*overflow: hidden;*/
-}
-
 body {
 	font-family: Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;
 	background: url('../book.jpg');
@@ -66,48 +61,6 @@ input:nth-child(2) {
 	clear: both;
 }
 
-.columns {
-	background: rgba(253, 242, 226, 0.8);
-}
-
-.col {
-	display: inline-block;
-	vertical-align: top;
-	margin: 2%;
-	width: 28%;
-}
-
-.template {
-	display: none;
-}
-
-.result span {
-	display: inline-block;
-	padding: 0em 1em;
-}
-
-.examples {
-	display: block;
-	text-align: center;
-	font: 1.5em futura;
-}
-
-.left span, .ex {
-	display: block;
-	padding: 0.7em;
-	/*margin: .2em;*/
-	text-align: left;
-}
-
-.center span {
-	display: block;
-}
-
-.center span:hover {
-	font-weight: bold;
-	cursor: pointer;
-}
-
 .pronounce {
 	margin-bottom: 0.2em;
 	font-size: 2em;
@@ -126,25 +79,30 @@ input:nth-child(2) {
 	cursor: pointer;
 }
 
-
-/*.examples {
-	position: relative;
+.columns {
+	background: rgba(253, 242, 226, 0.8);
 }
 
-.examples:after {
-	content: 'New Example';
-	padding: 0.4em;
-	text-align: center;
-	position: absolute;
-	left: 4em;
-	background: red;
-	border-radius: 0.9em;
-	font-size: 0.9em;
-	bottom: 0.5em;
+.col {
+	display: inline-block;
+	vertical-align: top;
+	margin: 2%;
+	width: 28%;
 }
 
-.examples span {
-	float: right;
-	margin-right: 8em;
-	margin-top: .5em;
-}*/
+.left span, .ex {
+	display: block;
+	padding: 0.7em;
+	text-align: left;
+}
+
+.center span {
+	display: block;
+}
+
+.center span:hover {
+	font-weight: bold;
+	cursor: pointer;
+}
+
+
