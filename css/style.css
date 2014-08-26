@@ -28,9 +28,27 @@ input:nth-child(2) {
 	height: 3em;
 }
 
-div {
-	width: 75%;
-	margin: 2em auto;
+.container {
+	text-align: center;
 }
 
+.container>div {
+	text-align: center;
+	clear: both;
+}
 
+.col {
+	display: inline-block;
+	vertical-align: top;
+	margin: 2em;
+	width: 28%;
+}
+
+.template {
+	display: none;
+}
+
+.result span {
+	display: inline-block;
+	padding: 0em 1em;
+}
