@@ -1,10 +1,14 @@
 $(document).ready(function(){
 
-	function playSound() {
-		$('#sound')[0].volume = 0.9;
-		$('#sound')[0].load();
-		$('#sound')[0].play();
-	}
+	// =========================================
+	// counter variable used in getDefinition()
+	// =========================================
+
+	var counter = 0;
+
+	// =========================================
+	// Functions
+	// =========================================
 
 	function reset() {
 		$('h2').empty();
@@ -15,9 +19,12 @@ $(document).ready(function(){
 		$('.left').empty().append('<h3>Definitions</h3>').hide();
 		$('.center').empty().append('<h3>Related Words</h3>').hide();
 		$('.right').empty().append('<h3>Examples</h3>').hide();
-		}
+		counter = 0;
+	}
 
 	function getDefinition(input) {
+		var inputLower = input.replace(input[0], input.charAt(0).toLowerCase());
+		var inputUpper = input.replace(input[0], input.charAt(0).toUpperCase());
 
 		$.ajax(
 			'http://api.wordnik.com/v4/word.json/'+ input +'/definitions',
@@ -31,13 +38,16 @@ $(document).ready(function(){
 					api_key: 'dd938175caa9ac3a0a32c09fcc607d8638f0a0e82c8a0bbad'
 				}, //end data
 				success:  function(data) {
-					console.log(data);
-					if(data[0] === undefined) {
-						$('h2').text("Sorry, can't find " + input);
+					if (data[0] === undefined && counter === 0) {				
+						counter++;
+						getDefinition(inputUpper);
+					} else if (data[0] === undefined) {
+						$('h2').text("Sorry, can't find " + inputLower + " or " + inputUpper);
 					} else {
 						$('h2').text(data[0].word);
 						$.each(data, function(i, definition){
 							$('.left').append('<span title="' + definition.attributionText + '" class="def">'+ definition.text + '</span>');					
+							showColumns();
 						}); // end each loop
 					} //end if statement
 				} //end callback
@@ -46,7 +56,6 @@ $(document).ready(function(){
 	}
 
 	function getPronounce(input) {
-
 		$.ajax(
 			'http://api.wordnik.com/v4/word.json/'+ input +'/pronunciations',
 			{
@@ -55,14 +64,20 @@ $(document).ready(function(){
 					api_key: 'dd938175caa9ac3a0a32c09fcc607d8638f0a0e82c8a0bbad'
 				}, //end data
 				success: function(data) {
-					$('.pronounce').html(data[0].raw);
+					var first = data[0];
+					$('.pronounce').html(first.raw);
 				} //end callback
 			} //end settings
 		); //end ajax
 	}
 
-	function getRelated(input) {
+	function playSound() {
+		$('#sound')[0].volume = 0.9;
+		$('#sound')[0].load();
+		$('#sound')[0].play();
+	}
 
+	function getRelated(input) {
 		$.ajax(
 			'http://api.wordnik.com/v4/word.json/'+ input +'/relatedWords',
 			{
@@ -86,7 +101,6 @@ $(document).ready(function(){
 	}
 
 	function getExamples(input) {
-
 		$.ajax(
 			'http://api.wordnik.com/v4/word.json/'+ input +'/examples',
 			{
@@ -98,7 +112,7 @@ $(document).ready(function(){
 				success: function(data) {
 					$.each(data.examples, function(i, example){
 						$('.right').append('<span>'+ example.text + '</span>');
-						$('.right').append('<span>-<strong>'+ example.provider.name + '</strong>, <em>' + example.title + '</em>, ' + example.year + '</span>');					
+						$('.right').append('<span class="exSrc">-<strong>'+ example.provider.name + '</strong>, <em>' + example.title + '</em>, ' + example.year + '</span>');					
 					}); // end each loop
 				} //end callback
 			} //end settings
@@ -106,7 +120,6 @@ $(document).ready(function(){
 	}
 
 	function getAudio(input) {
-
 		$.ajax(
 			'http://api.wordnik.com/v4/word.json/'+ input +'/audio',
 			{
@@ -122,7 +135,6 @@ $(document).ready(function(){
 						$('.playSound').attr('style', 'display: inline-block');
 					} 
 					playSound();
-					
 				} //end callback
 			} //end settings
 		); //end ajax
@@ -141,33 +153,29 @@ $(document).ready(function(){
 
 	}
 
-	$("form").submit(function(evt) {
-		evt.preventDefault();
-		var input = $('#search').val().trim().toLowerCase();
-
+	function wordUp(input) {
 		reset();
 		getRelated(input);
 		getDefinition(input);
 		getPronounce(input);
 		getExamples(input);
 		getAudio(input);
-		showColumns();
+	}
 
+	// =========================================
+	// Event Handlers
+	// =========================================
+
+	$("form").submit(function(evt) {
+		evt.preventDefault();
+		var input = $('#search').val().trim().toLowerCase();
+		wordUp(input);
 		$('#search').val('');
 	}); // end submit handler
 
 	$('.center').on("click", "span", function(){
-		
 		var input = $(this).text();
-
-		reset();
-		getRelated(input);
-		getDefinition(input);
-		getPronounce(input);
-		getExamples(input);
-		getAudio(input);
-		showColumns();
-
+		wordUp(input);
 	}); //end of related word click handler
 
 	$('.container').on("click", ".playSound", playSound); //end of sound click handler
@@ -175,6 +183,7 @@ $(document).ready(function(){
 	// =========================================
 	// Use enter key
 	// =========================================
+
 	$(document).on("keydown", function(event) {
 		if(event.which === 13) {
 			event.stopPropagation();
