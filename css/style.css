@@ -15,14 +15,6 @@ h2 {
 	font-size: 3.5em;
 }
 
-h3 {
-	border-bottom: 0.1em dotted green;
-}
-
-h4 {
-	border-bottom: 0.1em dotted blue;
-}
-
 h1, h2, h3, h4 {
 	font-weight: bold;
 }
@@ -81,6 +73,11 @@ input:nth-child(2) {
 
 .columns {
 	background: rgba(253, 242, 226, 0.8);
+	display: none;
+}
+
+.left, .center, .right {
+	display: none;
 }
 
 .col {
@@ -90,7 +87,7 @@ input:nth-child(2) {
 	width: 28%;
 }
 
-.left span, .ex {
+.left span, .right span {
 	display: block;
 	padding: 0.7em;
 	text-align: left;

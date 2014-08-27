@@ -11,10 +11,11 @@ $(document).ready(function(){
 		$('.pronounce').empty();
 		$('#sound').attr('src', '');
 		$('.playSound').attr('style', 'display: hidden');
-		$('.left').empty().append('<h3>Definitions</h3>');
-		$('.center').empty().append('<h3>Related Words</h3>');
-		$('.right').empty().append('<h3>Examples</h3>');
-	}
+		$('.columns').hide();
+		$('.left').empty().append('<h3>Definitions</h3>').hide();
+		$('.center').empty().append('<h3>Related Words</h3>').hide();
+		$('.right').empty().append('<h3>Examples</h3>').hide();
+		}
 
 	function getDefinition(input) {
 
@@ -30,13 +31,13 @@ $(document).ready(function(){
 					api_key: 'dd938175caa9ac3a0a32c09fcc607d8638f0a0e82c8a0bbad'
 				}, //end data
 				success:  function(data) {
-
+					console.log(data);
 					if(data[0] === undefined) {
 						$('h2').text("Sorry, can't find " + input);
 					} else {
 						$('h2').text(data[0].word);
 						$.each(data, function(i, definition){
-							$('.left').append('<span class="def">'+ definition.text + '</span>');					
+							$('.left').append('<span title="' + definition.attributionText + '" class="def">'+ definition.text + '</span>');					
 						}); // end each loop
 					} //end if statement
 				} //end callback
@@ -91,12 +92,13 @@ $(document).ready(function(){
 			{
 				data : {
 					word: input,
-					limit: 200,
+					limit: 10,
 					api_key: 'dd938175caa9ac3a0a32c09fcc607d8638f0a0e82c8a0bbad'
 				}, //end data
 				success: function(data) {
 					$.each(data.examples, function(i, example){
-						$('.right').append('<span class="ex">'+ example.text + '</span>');					
+						$('.right').append('<span>'+ example.text + '</span>');
+						$('.right').append('<span>-<strong>'+ example.provider.name + '</strong>, <em>' + example.title + '</em>, ' + example.year + '</span>');					
 					}); // end each loop
 				} //end callback
 			} //end settings
@@ -126,9 +128,22 @@ $(document).ready(function(){
 		); //end ajax
 	}
 
+	function showColumns() {
+		setTimeout(function() {
+			$('.columns').show();
+		}, 1500);
+
+		setTimeout(function() {
+			$('.left').slideDown(400);
+			$('.center').slideDown(800);
+			$('.right').slideDown(1200);
+		}, 2500);
+
+	}
+
 	$("form").submit(function(evt) {
 		evt.preventDefault();
-		var input = $('#search').val();
+		var input = $('#search').val().trim().toLowerCase();
 
 		reset();
 		getRelated(input);
@@ -136,6 +151,7 @@ $(document).ready(function(){
 		getPronounce(input);
 		getExamples(input);
 		getAudio(input);
+		showColumns();
 
 		$('#search').val('');
 	}); // end submit handler
@@ -150,6 +166,7 @@ $(document).ready(function(){
 		getPronounce(input);
 		getExamples(input);
 		getAudio(input);
+		showColumns();
 
 	}); //end of related word click handler
 
