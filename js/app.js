@@ -1,10 +1,11 @@
 $(document).ready(function(){
 
 	// =========================================
-	// counter variable used in getDefinition()
+	// Global Variables
 	// =========================================
 
 	var counter = 0;
+	var orig;
 
 	// =========================================
 	// Functions
@@ -23,6 +24,7 @@ $(document).ready(function(){
 	}
 
 	function getDefinition(input) {
+		var allLower = input.toLowerCase();
 		var inputLower = input.replace(input[0], input.charAt(0).toLowerCase());
 		var inputUpper = input.replace(input[0], input.charAt(0).toUpperCase());
 
@@ -30,7 +32,7 @@ $(document).ready(function(){
 			'http://api.wordnik.com/v4/word.json/'+ input +'/definitions',
 			{
 				data: {
-					word: input,
+					word: allLower,
 					limit: 10,
 					includeRelated: true,
 					useCanonical: false,
@@ -40,9 +42,10 @@ $(document).ready(function(){
 				success:  function(data) {
 					if (data[0] === undefined && counter === 0) {				
 						counter++;
+						orig = input;
 						getDefinition(inputUpper);
 					} else if (data[0] === undefined) {
-						$('h2').text("Sorry, can't find " + inputLower + " or " + inputUpper);
+						$('h2').text("Sorry, can't find " + orig);
 					} else {
 						$('h2').text(data[0].word);
 						$.each(data, function(i, definition){
@@ -168,8 +171,9 @@ $(document).ready(function(){
 
 	$("form").submit(function(evt) {
 		evt.preventDefault();
-		var input = $('#search').val().trim().toLowerCase();
-		wordUp(input);
+
+		orig = $('#search').val().trim();
+		wordUp(orig);
 		$('#search').val('');
 	}); // end submit handler
 
